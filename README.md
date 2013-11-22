@@ -1,1 +1,3 @@
-# Nunya.
+# jquery-rowmatch
+
+> Normalize row heights.

@@ -1,9 +1,9 @@
 /*!
- * jQuery Row Match Plugin v1.0.0
- * https://github.com/davemedema/jquery-rowmatch
+ * jquery-rowmatch
  *
  * @author Dave Medema / @davemedema
- * @version 1.0.0
+ * @homepage https://github.com/davemedema/jquery-rowmatch
+ * @version 0.1.0
  * @preserve
  *
  * Copyright 2013 Dave Medema
@@ -16,8 +16,8 @@
   'use strict';
 
   var RowMatch = function(element, options) {
-    this.$element = $(element);
-    this.options = $.extend({}, $.fn.rowMatch.defaults, options || {});
+    this.$el = $(element);
+    this.opts = $.extend({}, $.fn.rowMatch.defaults, options || {});
     this.match();
   };
 
@@ -26,22 +26,22 @@
     constructor: RowMatch,
 
     match: function() {
-      var rowElements = [];
-      var rowTop = 0;
-      var tallest = 0;
+      var rowElements = [],
+          rowTop = 0,
+          tallest = 0;
 
       // Match rows
-      this.$element.children().each(function() {
-
+      this.$el.children().each(function() {
         var $el = $(this).css('height', 'auto');
 
         if ($el.position().top !== rowTop) {
           for (var i = 0; i < rowElements.length; i++) {
             rowElements[i].height(tallest);
+
+            rowElements = [];
+            rowTop = $el.position().top;
+            tallest = 0;
           }
-          rowElements = [];
-          rowTop = $el.position().top;
-          tallest = 0;
         }
 
         rowElements.push($el);
@@ -49,15 +49,14 @@
         if (height > tallest) {
           tallest = height;
         }
-
       });
 
       // Match last row
-      for (var i = 0; i < rowElements.length; i++) {
-        rowElements[i].height(tallest);
+      for (var j = 0; j < rowElements.length; j++) {
+        rowElements[j].height(tallest);
       }
-
     }
+
   };
 
   var old = $.fn.rowMatch;
@@ -81,4 +80,4 @@
     return this;
   };
 
-})(window.jQuery);
+})(jQuery);
